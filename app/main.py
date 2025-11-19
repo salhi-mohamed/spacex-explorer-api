@@ -90,3 +90,12 @@ def rocket_details(rocket_id: str):
     if not rocket:
         raise HTTPException(status_code=404, detail="Rocket not found")
     return simplify_rocket(rocket)
+# ----------------------
+# Info endpoint (simple addition for diff)
+# ----------------------
+@app.get("/info")
+def info():
+    """
+    Simple endpoint to check the API status
+    """
+    return {"status": "SpaceX Explorer API is running", "version": "1.0"}
