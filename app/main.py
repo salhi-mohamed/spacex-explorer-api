@@ -134,7 +134,4 @@ def rocket_details(rocket_id: str):
 
 @app.get("/info")
 def info():
-    """
-    Simple endpoint to check the API status
-    """
     return {"status": "SpaceX Explorer API is running", "version": "1.0"}
