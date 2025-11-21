@@ -1,17 +1,64 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 import requests
+import time
+import uuid
+import json
+import logging
 
 app = FastAPI(title="SpaceX Explorer API")
 
-# ----------------------
-# Base URLs
-# ----------------------
+
 BASE_V5 = "https://api.spacexdata.com/v5"
 BASE_V4 = "https://api.spacexdata.com/v4"
 
-# ----------------------
-# Helper functions
-# ----------------------
+logging.basicConfig(level=logging.INFO, format="%(message)s")
+logger = logging.getLogger("spacex_api")
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    request_id = str(uuid.uuid4())
+    start = time.time()
+    method = request.method
+    path = request.url.path
+
+    # request received
+    logger.info(json.dumps({
+        "ts": int(start * 1000),
+        "event": "request_received",
+        "request_id": request_id,
+        "method": method,
+        "path": path
+    }))
+
+    try:
+        response = await call_next(request)
+        status = response.status_code
+    except Exception as exc:
+        now = time.time()
+        logger.error(json.dumps({
+            "ts": int(now * 1000),
+            "event": "exception",
+            "request_id": request_id,
+            "method": method,
+            "path": path,
+            "error": str(exc)
+        }))
+        raise
+
+    end = time.time()
+    duration_ms = int((end - start) * 1000)
+    # request completed
+    logger.info(json.dumps({
+        "ts": int(end * 1000),
+        "event": "request_completed",
+        "request_id": request_id,
+        "method": method,
+        "path": path,
+        "status": status,
+        "duration_ms": duration_ms
+    }))
+    return response
+
 def fetch_data(url: str):
     try:
         resp = requests.get(url, timeout=10)
@@ -51,9 +98,6 @@ def simplify_rocket(rocket: dict):
         "description": rocket.get("description"),
     }
 
-# ----------------------
-# Launches endpoints (v5)
-# ----------------------
 @app.get("/launches/upcoming")
 def upcoming_launches(limit: int = 5):
     launches = fetch_data(f"{BASE_V5}/launches/upcoming")
@@ -76,9 +120,6 @@ def launch_details(launch_id: str):
         raise HTTPException(status_code=404, detail="Launch not found")
     return simplify_launch(launch)
 
-# ----------------------
-# Rockets endpoints (v4)
-# ----------------------
 @app.get("/rockets")
 def rockets():
     rockets_data = fetch_data(f"{BASE_V4}/rockets")
@@ -90,9 +131,7 @@ def rocket_details(rocket_id: str):
     if not rocket:
         raise HTTPException(status_code=404, detail="Rocket not found")
     return simplify_rocket(rocket)
-# ----------------------
-# Info endpoint (simple addition for diff)
-# ----------------------
+
 @app.get("/info")
 def info():
     """
