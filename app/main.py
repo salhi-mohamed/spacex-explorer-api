@@ -1,18 +1,21 @@
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Response
 import requests
 import time
 import uuid
 import json
 import logging
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
 app = FastAPI(title="SpaceX Explorer API")
-
-
 BASE_V5 = "https://api.spacexdata.com/v5"
 BASE_V4 = "https://api.spacexdata.com/v4"
 
 logging.basicConfig(level=logging.INFO, format="%(message)s")
 logger = logging.getLogger("spacex_api")
+
+REQUEST_COUNTER = Counter("spacex_requests_total", "Total number of requests", ["method", "path", "status"])
+REQUEST_LATENCY = Histogram("spacex_request_latency_seconds", "Request latency in seconds", ["method", "path"])
+ERROR_COUNTER = Counter("spacex_errors_total", "Total number of failed requests", ["method", "path", "status"])
 
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
@@ -20,8 +23,6 @@ async def log_requests(request: Request, call_next):
     start = time.time()
     method = request.method
     path = request.url.path
-
-    # request received
     logger.info(json.dumps({
         "ts": int(start * 1000),
         "event": "request_received",
@@ -29,12 +30,19 @@ async def log_requests(request: Request, call_next):
         "method": method,
         "path": path
     }))
-
     try:
         response = await call_next(request)
         status = response.status_code
     except Exception as exc:
         now = time.time()
+        duration_s = now - start
+        # record metrics for error
+        try:
+            REQUEST_COUNTER.labels(method=method, path=path, status="500").inc()
+            REQUEST_LATENCY.labels(method=method, path=path).observe(duration_s)
+            ERROR_COUNTER.labels(method=method, path=path, status="500").inc()
+        except Exception:
+            pass
         logger.error(json.dumps({
             "ts": int(now * 1000),
             "event": "exception",
@@ -44,10 +52,19 @@ async def log_requests(request: Request, call_next):
             "error": str(exc)
         }))
         raise
-
     end = time.time()
-    duration_ms = int((end - start) * 1000)
-    # request completed
+    duration_s = end - start
+    duration_ms = int(duration_s * 1000)
+
+    # record metrics (best-effort)
+    try:
+        REQUEST_COUNTER.labels(method=method, path=path, status=str(status)).inc()
+        REQUEST_LATENCY.labels(method=method, path=path).observe(duration_s)
+        if status >= 400:
+            ERROR_COUNTER.labels(method=method, path=path, status=str(status)).inc()
+    except Exception:
+        pass
+
     logger.info(json.dumps({
         "ts": int(end * 1000),
         "event": "request_completed",
@@ -58,7 +75,6 @@ async def log_requests(request: Request, call_next):
         "duration_ms": duration_ms
     }))
     return response
-
 def fetch_data(url: str):
     try:
         resp = requests.get(url, timeout=10)
@@ -67,7 +83,6 @@ def fetch_data(url: str):
         return resp.json()
     except requests.exceptions.RequestException as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch data: {e}")
-
 def simplify_launch(launch: dict):
     return {
         "name": launch.get("name"),
@@ -81,7 +96,6 @@ def simplify_launch(launch: dict):
         "patch_small": launch.get("links", {}).get("patch", {}).get("small"),
         "patch_large": launch.get("links", {}).get("patch", {}).get("large"),
     }
-
 def simplify_rocket(rocket: dict):
     return {
         "name": rocket.get("name"),
@@ -97,41 +111,38 @@ def simplify_rocket(rocket: dict):
         "mass_kg": rocket.get("mass", {}).get("kg"),
         "description": rocket.get("description"),
     }
-
 @app.get("/launches/upcoming")
 def upcoming_launches(limit: int = 5):
     launches = fetch_data(f"{BASE_V5}/launches/upcoming")
     return [simplify_launch(l) for l in launches[:limit]]
-
 @app.get("/launches/past")
 def past_launches(limit: int = 5):
     launches = fetch_data(f"{BASE_V5}/launches/past")
     return [simplify_launch(l) for l in launches[:limit]]
-
 @app.get("/launches/latest")
 def latest_launch():
     launch = fetch_data(f"{BASE_V5}/launches/latest")
     return simplify_launch(launch)
-
 @app.get("/launches/{launch_id}")
 def launch_details(launch_id: str):
     launch = fetch_data(f"{BASE_V5}/launches/{launch_id}")
     if not launch:
         raise HTTPException(status_code=404, detail="Launch not found")
     return simplify_launch(launch)
-
 @app.get("/rockets")
 def rockets():
     rockets_data = fetch_data(f"{BASE_V4}/rockets")
     return [simplify_rocket(r) for r in rockets_data]
-
 @app.get("/rockets/{rocket_id}")
 def rocket_details(rocket_id: str):
     rocket = fetch_data(f"{BASE_V4}/rockets/{rocket_id}")
     if not rocket:
         raise HTTPException(status_code=404, detail="Rocket not found")
     return simplify_rocket(rocket)
-
 @app.get("/info")
 def info():
     return {"status": "SpaceX Explorer API is running", "version": "1.0"}
+@app.get("/metrics")
+def metrics():
+  
+    return Response(content=generate_latest(), media_type=CONTENT_TYPE_LATEST)
