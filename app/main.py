@@ -39,7 +39,7 @@ async def log_and_trace(request: Request, call_next):
             REQUEST_COUNTER.labels(method=method, path=path, status="500").inc()
             REQUEST_LATENCY.labels(method=method, path=path).observe(duration_s)
             ERROR_COUNTER.labels(method=method, path=path, status="500").inc()
-        except Exception:
+        except Exception:  # nosec B110
             pass
         logger.error(json.dumps({
             "ts": int(now*1000), "event":"exception",
@@ -56,7 +56,7 @@ async def log_and_trace(request: Request, call_next):
         REQUEST_LATENCY.labels(method=method, path=path).observe(duration_s)
         if status >= 400:
             ERROR_COUNTER.labels(method=method, path=path, status=str(status)).inc()
-    except Exception:
+    except Exception:  # nosec B110
         pass
 
     # attach trace id header so clients and downstream can see/correlate it
