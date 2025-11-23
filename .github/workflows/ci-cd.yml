@@ -1,6 +1,5 @@
 name: CI Pipeline
 
-# Déclenche le pipeline à chaque push ou pull request
 on:
   push:
     branches:
@@ -29,17 +28,17 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r app/requirements.txt   # << chemin corrigé
 
       # 4️⃣ SAST avec Bandit
       - name: Run SAST (Bandit)
         run: |
-          bandit -r .
+          bandit -r app   # << scanner uniquement le code dans le dossier app
 
       # 5️⃣ Lancer les tests unitaires
       - name: Run tests
         run: |
-          pytest || true
+          pytest app/tests   # << si tes tests sont dans app/tests
 
       # 6️⃣ Optionnel : build Docker (plus tard)
       # - name: Build Docker image
