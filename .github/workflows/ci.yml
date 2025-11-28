@@ -1,0 +1,55 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, feature/ci-cd-pipeline ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️ Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2️ Installer Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      # 3️ Installer les dépendances
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # 4️ Lancer les tests unitaires
+      - name: Run tests
+        run: |
+          pytest
+
+      # 5️ Build Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t spacex-api .
+
+      # 6️ Lancer container pour DAST
+      - name: Run API container
+        run: |
+          docker run -d -p 8000:8000 --name spacex-api-test spacex-api
+          sleep 5  # attendre que l'API démarre
+
+      # 7️ Lancer DAST
+      - name: Run DAST
+        run: |
+          python dast_scan.py
+
+      # 8️ Arrêter et supprimer le container
+      - name: Stop container
+        run: |
+          docker stop spacex-api-test
+          docker rm spacex-api-test
