@@ -34,8 +34,7 @@ jobs:
       - name: Run Bandit (Static Analysis)
         run: |
           # -r: récursif, -ll: seulement sévérité moyenne ou haute
-          bandit -r . -ll -v
-
+              run: bandit -r . -v
       # 5️⃣ SAST : Vérifier la sécurité des dépendances avec Safety
       - name: Run Safety (Dependency Check)
         run: |
