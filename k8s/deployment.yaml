@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spacex-api-deployment
+  labels:
+    app: spacex-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spacex-api
+  template:
+    metadata:
+      labels:
+        app: spacex-api
+    spec:
+      containers:
+      - name: spacex-api
+        image: spacex-api:1.0
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000

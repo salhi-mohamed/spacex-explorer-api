@@ -1,8 +1,22 @@
+# Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.env
+
+# Pytest
 .pytest_cache/
-tests/
-.dockerignore
+app/.pytest_cache/
+
+# Environnements
+.env
+.venv
+venv/
+
+# Git
+.git
+.gitignore
+
+# OS
+.DS_Store
+Thumbs.db
