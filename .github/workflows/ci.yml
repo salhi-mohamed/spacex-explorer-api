@@ -33,13 +33,11 @@ jobs:
       # 4️⃣ SAST : Scanner le code source avec Bandit
       - name: Run Bandit (Static Analysis)
         run: |
-          # -r: récursif, -ll: seulement sévérité moyenne ou haute
           bandit -r . -ll -v
 
       # 5️⃣ SAST : Vérifier la sécurité des dépendances avec Safety
       - name: Run Safety (Dependency Check)
         run: |
-          # Vérifie les vulnérabilités connues dans les packages installés
           safety check
 
       # --- FIN SECTION SAST ---
@@ -48,7 +46,6 @@ jobs:
       - name: Run tests
         run: |
           export PYTHONPATH=$PYTHONPATH:$(pwd)
-          # On suppose que pytest est dans requirements.txt, sinon l'ajouter ici
           pytest
 
       # 7️⃣ Build Docker image
@@ -60,7 +57,7 @@ jobs:
       - name: Run API container
         run: |
           docker run -d -p 8000:8000 --name spacex-api-test spacex-api
-          sleep 5  # attendre que l'API démarre
+          sleep 5
 
       # 9️⃣ Lancer DAST
       - name: Run DAST
@@ -72,3 +69,14 @@ jobs:
         run: |
           docker stop spacex-api-test
           docker rm spacex-api-test
+
+      # 1️⃣1️⃣ Deploy to Kubernetes
+      - name: Deploy to Kubernetes
+        uses: azure/k8s-deploy@v3
+        with:
+          namespace: default
+          manifests: |
+            k8s/deployment.yaml
+            k8s/service.yaml
+          images: |
+            spacex-api
