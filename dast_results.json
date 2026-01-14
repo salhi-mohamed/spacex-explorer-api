@@ -1,0 +1,182 @@
+[
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/info",
+    "attack_type": "sql_injection",
+    "payload": "' OR '1'='1",
+    "status_code": 200,
+    "response_length": 109,
+    "timestamp": "2026-01-14 21:22:41"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/info",
+    "attack_type": "xss",
+    "payload": "<script>alert(1)</script>",
+    "status_code": 200,
+    "response_length": 109,
+    "timestamp": "2026-01-14 21:22:41"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/info",
+    "attack_type": "path_traversal",
+    "payload": "../../etc/passwd",
+    "status_code": 200,
+    "response_length": 109,
+    "timestamp": "2026-01-14 21:22:41"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/info",
+    "attack_type": "normal",
+    "payload": "test",
+    "status_code": 200,
+    "response_length": 109,
+    "timestamp": "2026-01-14 21:22:41"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/launches/upcoming",
+    "attack_type": "sql_injection",
+    "payload": "' OR '1'='1",
+    "status_code": 200,
+    "response_length": 1258,
+    "timestamp": "2026-01-14 21:22:42"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/launches/upcoming",
+    "attack_type": "xss",
+    "payload": "<script>alert(1)</script>",
+    "status_code": 200,
+    "response_length": 1258,
+    "timestamp": "2026-01-14 21:22:42"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/launches/upcoming",
+    "attack_type": "path_traversal",
+    "payload": "../../etc/passwd",
+    "status_code": 200,
+    "response_length": 1258,
+    "timestamp": "2026-01-14 21:22:43"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/launches/upcoming",
+    "attack_type": "normal",
+    "payload": "test",
+    "status_code": 200,
+    "response_length": 1258,
+    "timestamp": "2026-01-14 21:22:43"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/launches/past",
+    "attack_type": "sql_injection",
+    "payload": "' OR '1'='1",
+    "status_code": 200,
+    "response_length": 2181,
+    "timestamp": "2026-01-14 21:22:45"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/launches/past",
+    "attack_type": "xss",
+    "payload": "<script>alert(1)</script>",
+    "status_code": 200,
+    "response_length": 2181,
+    "timestamp": "2026-01-14 21:22:47"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/launches/past",
+    "attack_type": "path_traversal",
+    "payload": "../../etc/passwd",
+    "status_code": 200,
+    "response_length": 2181,
+    "timestamp": "2026-01-14 21:22:48"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/launches/past",
+    "attack_type": "normal",
+    "payload": "test",
+    "status_code": 200,
+    "response_length": 2181,
+    "timestamp": "2026-01-14 21:22:48"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/launches/latest",
+    "attack_type": "sql_injection",
+    "payload": "' OR '1'='1",
+    "status_code": 200,
+    "response_length": 330,
+    "timestamp": "2026-01-14 21:22:48"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/launches/latest",
+    "attack_type": "xss",
+    "payload": "<script>alert(1)</script>",
+    "status_code": 200,
+    "response_length": 330,
+    "timestamp": "2026-01-14 21:22:49"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/launches/latest",
+    "attack_type": "path_traversal",
+    "payload": "../../etc/passwd",
+    "status_code": 200,
+    "response_length": 330,
+    "timestamp": "2026-01-14 21:22:49"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/launches/latest",
+    "attack_type": "normal",
+    "payload": "test",
+    "status_code": 200,
+    "response_length": 330,
+    "timestamp": "2026-01-14 21:22:49"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/rockets",
+    "attack_type": "sql_injection",
+    "payload": "' OR '1'='1",
+    "status_code": 200,
+    "response_length": 1922,
+    "timestamp": "2026-01-14 21:22:50"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/rockets",
+    "attack_type": "xss",
+    "payload": "<script>alert(1)</script>",
+    "status_code": 200,
+    "response_length": 1922,
+    "timestamp": "2026-01-14 21:22:50"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/rockets",
+    "attack_type": "path_traversal",
+    "payload": "../../etc/passwd",
+    "status_code": 200,
+    "response_length": 1922,
+    "timestamp": "2026-01-14 21:22:50"
+  },
+  {
+    "scan_id": 1768422161,
+    "endpoint": "/rockets",
+    "attack_type": "normal",
+    "payload": "test",
+    "status_code": 200,
+    "response_length": 1922,
+    "timestamp": "2026-01-14 21:22:51"
+  }
+]
