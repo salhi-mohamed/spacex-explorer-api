@@ -15,7 +15,7 @@ jobs:
     steps:
       # 1️⃣ Checkout code
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       # 2️⃣ Installer Python
       - name: Set up Python
@@ -79,7 +79,7 @@ jobs:
           docker save ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} | gzip > spacex-api.tar.gz
       
       - name: Upload Docker image artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: docker-image
           path: spacex-api.tar.gz
@@ -92,11 +92,11 @@ jobs:
     steps:
       # 1️⃣ Checkout code pour accéder aux manifests K8s
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       # 2️⃣ Télécharger l'image Docker
       - name: Download Docker image artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: docker-image
       
