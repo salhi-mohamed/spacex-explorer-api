@@ -157,7 +157,7 @@ jobs:
       # 🔟 Attendre que le déploiement soit prêt
       - name: Wait for deployment
         run: |
-          kubectl rollout status deployment/spacex-api-deployment --timeout=300s
+          kubectl rollout status deployment/spacex-api --timeout=300s
       
       # 1️⃣1️⃣ Vérifier le statut du déploiement
       - name: Check deployment status
@@ -167,7 +167,7 @@ jobs:
           echo "=== Services ==="
           kubectl get svc spacex-api-service
           echo "=== Deployment ==="
-          kubectl get deployment spacex-api-deployment
+          kubectl get deployment spacex-api
       
       # 1️⃣2️⃣ Test de santé de l'API déployée
       - name: Health check
