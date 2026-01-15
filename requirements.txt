@@ -1,12 +1,14 @@
 fastapi
-uvicorn
+uvicorn[standard]
 requests
-prometheus_client
+prometheus-client
 httpx
 pytest
 
+# OpenTelemetry - Tracing dependencies
 opentelemetry-api
 opentelemetry-sdk
 opentelemetry-instrumentation-fastapi
 opentelemetry-instrumentation-requests
+opentelemetry-exporter-jaeger
 opentelemetry-exporter-otlp
