@@ -24,9 +24,63 @@ docker logs -f spacex-api
 
 
 
+**DELETE DEPLOYMENTS**
+
+\# Delete API deployment and service
+
+kubectl delete deployment spacex-api
+
+kubectl delete svc spacex-api-service
+
+
+
+\# Delete Prometheus deployment and service
+
+kubectl delete deployment prometheus
+
+kubectl delete svc prometheus-service
+
+kubectl get all
+
+
+
+kubectl apply -f k8s/prometheus-configmap.yaml
+
+kubectl apply -f k8s/prometheus-deployment.yaml
+
+kubectl apply -f k8s/prometheus-service.yaml
+
+
+
+\# Make sure Docker image is built first
+
+docker build -t spacex-api:1.0 .
+
+
+
+kubectl apply -f k8s/deployment.yaml
+
+kubectl apply -f k8s/service.yaml
+
+
+
+kubectl get pods
+
+
+
+kubectl port-forward svc/prometheus-service 9090:9090
+
+minikube service spacex-api-service --url
+
+
+
+
+
 
 
 **RUN DOCKER PROMETHEUS**
+
+
 
 docker rm -f prometheus
 
@@ -68,13 +122,13 @@ streamlit run Dast\_Dashboard.py
 
 **TESTS**
 
-  **-REPORT**
+**-REPORT**
 
-&nbsp;   $env:PYTHONPATH = "$PWD"
+    $env:PYTHONPATH = "$PWD"
 
 pytest tests/ --html=report.html --self-contained-html --disable-warnings -v; Start-Process report.html
 
- **-TERMINAL**
+**-TERMINAL**
 
 pytest tests/ -v --capture=tee-sys
 
@@ -94,7 +148,7 @@ pytest tests/ -v --capture=tee-sys
 
 docker build -t spacex-api:1.0 .
 
-**APPLY SERVICE AND DEPLOYMENT** 
+**APPLY SERVICE AND DEPLOYMENT**
 
 kubectl apply -f k8s/deployment.yaml
 
@@ -121,8 +175,4 @@ curl http://127.0.0.1:50160/launches/upcoming -UseBasicParsing
 curl http://127.0.0.1:50160/launches/past -UseBasicParsing
 
 curl http://127.0.0.1:50160/rockets -UseBasicParsing
-
-
-
-
 

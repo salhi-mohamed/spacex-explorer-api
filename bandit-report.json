@@ -1,6 +1,6 @@
 {
   "errors": [],
-  "generated_at": "2026-01-15T09:12:01Z",
+  "generated_at": "2026-01-15T17:16:38Z",
   "metrics": {
     "_totals": {
       "CONFIDENCE.HIGH": 390,
@@ -5291,7 +5291,7 @@
       "test_name": "try_except_pass"
     },
     {
-      "code": "58             ERROR_COUNTER.labels(method=method, path=path, status=str(status)).inc()\n59     except Exception:\n60         pass\n61 \n",
+      "code": "58             ERROR_COUNTER.labels(method=method, path=path, status=str(status)).inc()\n59     except Exception:\n60         pass\n61     # attach trace id header so clients and downstream can see/correlate it\n",
       "col_offset": 4,
       "end_col_offset": 12,
       "filename": "app/main.py",

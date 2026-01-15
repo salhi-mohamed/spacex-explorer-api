@@ -1,182 +1,432 @@
 [
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
     "endpoint": "/info",
     "attack_type": "sql_injection",
     "payload": "' OR '1'='1",
     "status_code": 200,
     "response_length": 109,
-    "timestamp": "2026-01-14 23:39:23"
+    "duration_sec": 0.12,
+    "timestamp": "2026-01-15 18:15:46",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 109
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
     "endpoint": "/info",
     "attack_type": "xss",
     "payload": "<script>alert(1)</script>",
     "status_code": 200,
     "response_length": 109,
-    "timestamp": "2026-01-14 23:39:23"
+    "duration_sec": 0.1,
+    "timestamp": "2026-01-15 18:15:46",
+    "findings": [
+      "Missing X-XSS-Protection header",
+      "Missing Content-Security-Policy header"
+    ],
+    "severity": "Medium",
+    "baseline_length": 109
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
     "endpoint": "/info",
     "attack_type": "path_traversal",
     "payload": "../../etc/passwd",
     "status_code": 200,
     "response_length": 109,
-    "timestamp": "2026-01-14 23:39:23"
+    "duration_sec": 0.03,
+    "timestamp": "2026-01-15 18:15:46",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 109
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
+    "endpoint": "/info",
+    "attack_type": "command_injection",
+    "payload": "; ls -la",
+    "status_code": 200,
+    "response_length": 109,
+    "duration_sec": 0.09,
+    "timestamp": "2026-01-15 18:15:46",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 109
+  },
+  {
+    "scan_id": 1768497343,
+    "endpoint": "/info",
+    "attack_type": "xxe",
+    "payload": "<?xml version='1.0'?><!DOCTYPE foo [<!ENTITY xxe SYSTEM 'file:///etc/passwd'>]>",
+    "status_code": 200,
+    "response_length": 109,
+    "duration_sec": 0.08,
+    "timestamp": "2026-01-15 18:15:46",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 109
+  },
+  {
+    "scan_id": 1768497343,
     "endpoint": "/info",
     "attack_type": "normal",
     "payload": "test",
     "status_code": 200,
     "response_length": 109,
-    "timestamp": "2026-01-14 23:39:23"
+    "duration_sec": 0.08,
+    "timestamp": "2026-01-15 18:15:46",
+    "findings": [
+      "Missing security header: X-Content-Type-Options",
+      "Missing security header: X-Frame-Options",
+      "Missing security header: Strict-Transport-Security",
+      "Missing security header: Content-Security-Policy"
+    ],
+    "severity": "Low",
+    "baseline_length": 109
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
     "endpoint": "/launches/upcoming",
     "attack_type": "sql_injection",
     "payload": "' OR '1'='1",
     "status_code": 200,
     "response_length": 1258,
-    "timestamp": "2026-01-14 23:39:23"
+    "duration_sec": 0.41,
+    "timestamp": "2026-01-15 18:15:46",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 1258
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
     "endpoint": "/launches/upcoming",
     "attack_type": "xss",
     "payload": "<script>alert(1)</script>",
     "status_code": 200,
     "response_length": 1258,
-    "timestamp": "2026-01-14 23:39:24"
+    "duration_sec": 0.37,
+    "timestamp": "2026-01-15 18:15:47",
+    "findings": [
+      "Missing X-XSS-Protection header",
+      "Missing Content-Security-Policy header"
+    ],
+    "severity": "Medium",
+    "baseline_length": 1258
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
     "endpoint": "/launches/upcoming",
     "attack_type": "path_traversal",
     "payload": "../../etc/passwd",
     "status_code": 200,
     "response_length": 1258,
-    "timestamp": "2026-01-14 23:39:25"
+    "duration_sec": 0.33,
+    "timestamp": "2026-01-15 18:15:47",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 1258
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
+    "endpoint": "/launches/upcoming",
+    "attack_type": "command_injection",
+    "payload": "; ls -la",
+    "status_code": 200,
+    "response_length": 1258,
+    "duration_sec": 0.35,
+    "timestamp": "2026-01-15 18:15:47",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 1258
+  },
+  {
+    "scan_id": 1768497343,
+    "endpoint": "/launches/upcoming",
+    "attack_type": "xxe",
+    "payload": "<?xml version='1.0'?><!DOCTYPE foo [<!ENTITY xxe SYSTEM 'file:///etc/passwd'>]>",
+    "status_code": 200,
+    "response_length": 1258,
+    "duration_sec": 0.35,
+    "timestamp": "2026-01-15 18:15:48",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 1258
+  },
+  {
+    "scan_id": 1768497343,
     "endpoint": "/launches/upcoming",
     "attack_type": "normal",
     "payload": "test",
     "status_code": 200,
     "response_length": 1258,
-    "timestamp": "2026-01-14 23:39:25"
+    "duration_sec": 0.31,
+    "timestamp": "2026-01-15 18:15:48",
+    "findings": [
+      "Missing security header: X-Content-Type-Options",
+      "Missing security header: X-Frame-Options",
+      "Missing security header: Strict-Transport-Security",
+      "Missing security header: Content-Security-Policy"
+    ],
+    "severity": "Low",
+    "baseline_length": 1258
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
     "endpoint": "/launches/past",
     "attack_type": "sql_injection",
     "payload": "' OR '1'='1",
     "status_code": 200,
     "response_length": 2181,
-    "timestamp": "2026-01-14 23:39:26"
+    "duration_sec": 0.53,
+    "timestamp": "2026-01-15 18:15:49",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 2181
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
     "endpoint": "/launches/past",
     "attack_type": "xss",
     "payload": "<script>alert(1)</script>",
     "status_code": 200,
     "response_length": 2181,
-    "timestamp": "2026-01-14 23:39:27"
+    "duration_sec": 0.31,
+    "timestamp": "2026-01-15 18:15:49",
+    "findings": [
+      "Missing X-XSS-Protection header",
+      "Missing Content-Security-Policy header"
+    ],
+    "severity": "Medium",
+    "baseline_length": 2181
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
     "endpoint": "/launches/past",
     "attack_type": "path_traversal",
     "payload": "../../etc/passwd",
     "status_code": 200,
     "response_length": 2181,
-    "timestamp": "2026-01-14 23:39:27"
+    "duration_sec": 0.32,
+    "timestamp": "2026-01-15 18:15:49",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 2181
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
+    "endpoint": "/launches/past",
+    "attack_type": "command_injection",
+    "payload": "; ls -la",
+    "status_code": 200,
+    "response_length": 2181,
+    "duration_sec": 0.33,
+    "timestamp": "2026-01-15 18:15:50",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 2181
+  },
+  {
+    "scan_id": 1768497343,
+    "endpoint": "/launches/past",
+    "attack_type": "xxe",
+    "payload": "<?xml version='1.0'?><!DOCTYPE foo [<!ENTITY xxe SYSTEM 'file:///etc/passwd'>]>",
+    "status_code": 200,
+    "response_length": 2181,
+    "duration_sec": 0.3,
+    "timestamp": "2026-01-15 18:15:50",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 2181
+  },
+  {
+    "scan_id": 1768497343,
     "endpoint": "/launches/past",
     "attack_type": "normal",
     "payload": "test",
     "status_code": 200,
     "response_length": 2181,
-    "timestamp": "2026-01-14 23:39:28"
+    "duration_sec": 0.28,
+    "timestamp": "2026-01-15 18:15:50",
+    "findings": [
+      "Missing security header: X-Content-Type-Options",
+      "Missing security header: X-Frame-Options",
+      "Missing security header: Strict-Transport-Security",
+      "Missing security header: Content-Security-Policy"
+    ],
+    "severity": "Low",
+    "baseline_length": 2181
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
     "endpoint": "/launches/latest",
     "attack_type": "sql_injection",
     "payload": "' OR '1'='1",
     "status_code": 200,
     "response_length": 330,
-    "timestamp": "2026-01-14 23:39:28"
+    "duration_sec": 0.41,
+    "timestamp": "2026-01-15 18:15:51",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 330
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
     "endpoint": "/launches/latest",
     "attack_type": "xss",
     "payload": "<script>alert(1)</script>",
     "status_code": 200,
     "response_length": 330,
-    "timestamp": "2026-01-14 23:39:28"
+    "duration_sec": 0.35,
+    "timestamp": "2026-01-15 18:15:51",
+    "findings": [
+      "Missing X-XSS-Protection header",
+      "Missing Content-Security-Policy header"
+    ],
+    "severity": "Medium",
+    "baseline_length": 330
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
     "endpoint": "/launches/latest",
     "attack_type": "path_traversal",
     "payload": "../../etc/passwd",
     "status_code": 200,
     "response_length": 330,
-    "timestamp": "2026-01-14 23:39:28"
+    "duration_sec": 0.35,
+    "timestamp": "2026-01-15 18:15:51",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 330
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
+    "endpoint": "/launches/latest",
+    "attack_type": "command_injection",
+    "payload": "; ls -la",
+    "status_code": 200,
+    "response_length": 330,
+    "duration_sec": 0.4,
+    "timestamp": "2026-01-15 18:15:52",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 330
+  },
+  {
+    "scan_id": 1768497343,
+    "endpoint": "/launches/latest",
+    "attack_type": "xxe",
+    "payload": "<?xml version='1.0'?><!DOCTYPE foo [<!ENTITY xxe SYSTEM 'file:///etc/passwd'>]>",
+    "status_code": 200,
+    "response_length": 330,
+    "duration_sec": 0.32,
+    "timestamp": "2026-01-15 18:15:52",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 330
+  },
+  {
+    "scan_id": 1768497343,
     "endpoint": "/launches/latest",
     "attack_type": "normal",
     "payload": "test",
     "status_code": 200,
     "response_length": 330,
-    "timestamp": "2026-01-14 23:39:29"
+    "duration_sec": 0.4,
+    "timestamp": "2026-01-15 18:15:52",
+    "findings": [
+      "Missing security header: X-Content-Type-Options",
+      "Missing security header: X-Frame-Options",
+      "Missing security header: Strict-Transport-Security",
+      "Missing security header: Content-Security-Policy"
+    ],
+    "severity": "Low",
+    "baseline_length": 330
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
     "endpoint": "/rockets",
     "attack_type": "sql_injection",
     "payload": "' OR '1'='1",
     "status_code": 200,
     "response_length": 1922,
-    "timestamp": "2026-01-14 23:39:29"
+    "duration_sec": 0.42,
+    "timestamp": "2026-01-15 18:15:53",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 1922
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
     "endpoint": "/rockets",
     "attack_type": "xss",
     "payload": "<script>alert(1)</script>",
     "status_code": 200,
     "response_length": 1922,
-    "timestamp": "2026-01-14 23:39:29"
+    "duration_sec": 0.34,
+    "timestamp": "2026-01-15 18:15:53",
+    "findings": [
+      "Missing X-XSS-Protection header",
+      "Missing Content-Security-Policy header"
+    ],
+    "severity": "Medium",
+    "baseline_length": 1922
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
     "endpoint": "/rockets",
     "attack_type": "path_traversal",
     "payload": "../../etc/passwd",
     "status_code": 200,
     "response_length": 1922,
-    "timestamp": "2026-01-14 23:39:30"
+    "duration_sec": 0.37,
+    "timestamp": "2026-01-15 18:15:54",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 1922
   },
   {
-    "scan_id": 1768430363,
+    "scan_id": 1768497343,
+    "endpoint": "/rockets",
+    "attack_type": "command_injection",
+    "payload": "; ls -la",
+    "status_code": 200,
+    "response_length": 1922,
+    "duration_sec": 0.31,
+    "timestamp": "2026-01-15 18:15:54",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 1922
+  },
+  {
+    "scan_id": 1768497343,
+    "endpoint": "/rockets",
+    "attack_type": "xxe",
+    "payload": "<?xml version='1.0'?><!DOCTYPE foo [<!ENTITY xxe SYSTEM 'file:///etc/passwd'>]>",
+    "status_code": 200,
+    "response_length": 1922,
+    "duration_sec": 0.25,
+    "timestamp": "2026-01-15 18:15:54",
+    "findings": [],
+    "severity": "Low",
+    "baseline_length": 1922
+  },
+  {
+    "scan_id": 1768497343,
     "endpoint": "/rockets",
     "attack_type": "normal",
     "payload": "test",
     "status_code": 200,
     "response_length": 1922,
-    "timestamp": "2026-01-14 23:39:30"
+    "duration_sec": 0.26,
+    "timestamp": "2026-01-15 18:15:54",
+    "findings": [
+      "Missing security header: X-Content-Type-Options",
+      "Missing security header: X-Frame-Options",
+      "Missing security header: Strict-Transport-Security",
+      "Missing security header: Content-Security-Policy"
+    ],
+    "severity": "Low",
+    "baseline_length": 1922
   }
 ]

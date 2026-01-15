@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spacex-api-deployment
+  name: spacex-api
   labels:
     app: spacex-api
 spec:
@@ -15,8 +15,21 @@ spec:
         app: spacex-api
     spec:
       containers:
-      - name: spacex-api
-        image: spacex-api:1.0
-        imagePullPolicy: Never
-        ports:
-        - containerPort: 8000
+        - name: spacex-api
+          image: spacex-api:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5

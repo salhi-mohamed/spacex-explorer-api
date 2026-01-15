@@ -4,3 +4,9 @@ requests
 prometheus_client
 httpx
 pytest
+
+opentelemetry-api
+opentelemetry-sdk
+opentelemetry-instrumentation-fastapi
+opentelemetry-instrumentation-requests
+opentelemetry-exporter-otlp

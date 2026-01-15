@@ -25,5 +25,5 @@ COPY app/ app/
 # Exposer le port utilisé par FastAPI
 EXPOSE 8000
 
-# Commande pour démarrer l'API
+# Commande pour démarrer l'API sur toutes les interfaces
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
