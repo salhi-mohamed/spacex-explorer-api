@@ -66,6 +66,22 @@ streamlit run Dast\_Dashboard.py
 
 
 
+**TESTS**
+
+  **-REPORT**
+
+&nbsp;   $env:PYTHONPATH = "$PWD"
+
+pytest tests/ --html=report.html --self-contained-html --disable-warnings -v; Start-Process report.html
+
+ **-TERMINAL**
+
+pytest tests/ -v --capture=tee-sys
+
+
+
+
+
 
 
 
@@ -76,5 +92,37 @@ streamlit run Dast\_Dashboard.py
 
   minikube start
 
-minikube image build -t spacex-api:1.0 .
+docker build -t spacex-api:1.0 .
+
+**APPLY SERVICE AND DEPLOYMENT** 
+
+kubectl apply -f k8s/deployment.yaml
+
+kubectl apply -f k8s/service.yaml
+
+**VERIFY SOURCES ARE RUNNING**
+
+kubectl get deployments
+
+kubectl get pods
+
+kubectl get services
+
+**GET THE SERVICE URL**
+
+minikube service spacex-api-service --url
+
+**TESTING**
+
+curl http://127.0.0.1:50160/info -UseBasicParsing
+
+curl http://127.0.0.1:50160/launches/upcoming -UseBasicParsing
+
+curl http://127.0.0.1:50160/launches/past -UseBasicParsing
+
+curl http://127.0.0.1:50160/rockets -UseBasicParsing
+
+
+
+
 

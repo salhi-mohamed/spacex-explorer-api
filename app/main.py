@@ -58,7 +58,6 @@ async def log_and_trace(request: Request, call_next):
             ERROR_COUNTER.labels(method=method, path=path, status=str(status)).inc()
     except Exception:
         pass
-
     # attach trace id header so clients and downstream can see/correlate it
     response.headers["X-Trace-Id"] = trace_id
 
@@ -68,7 +67,6 @@ async def log_and_trace(request: Request, call_next):
         "status": status, "duration_ms": duration_ms
     }))
     return response
-
 # ---------------------- helper: fetch with trace propagation ----------------------
 def fetch_data(url: str, trace_id: str = None):
     headers = {}
@@ -89,7 +87,6 @@ def fetch_data(url: str, trace_id: str = None):
         return resp.json()
     except requests.exceptions.RequestException as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch data: {e}")
-
 # ---------------------- simplifiers ----------------------
 def simplify_launch(launch: dict):
     return {
@@ -110,46 +107,38 @@ def simplify_rocket(rocket: dict):
         "height_m": rocket.get("height", {}).get("meters"), "diameter_m": rocket.get("diameter", {}).get("meters"),
         "mass_kg": rocket.get("mass", {}).get("kg"), "description": rocket.get("description"),
     }
-
 # ---------------------- endpoints (pass request to access trace id) ----------------------
 @app.get("/launches/upcoming")
 def upcoming_launches(request: Request, limit: int = 5):
     launches = fetch_data(f"{BASE_V5}/launches/upcoming", trace_id=request.state.trace_id)
     return [simplify_launch(l) for l in launches[:limit]]
-
 @app.get("/launches/past")
 def past_launches(request: Request, limit: int = 5):
     launches = fetch_data(f"{BASE_V5}/launches/past", trace_id=request.state.trace_id)
     return [simplify_launch(l) for l in launches[:limit]]
-
 @app.get("/launches/latest")
 def latest_launch(request: Request):
     launch = fetch_data(f"{BASE_V5}/launches/latest", trace_id=request.state.trace_id)
     return simplify_launch(launch)
-
 @app.get("/launches/{launch_id}")
 def launch_details(launch_id: str, request: Request):
     launch = fetch_data(f"{BASE_V5}/launches/{launch_id}", trace_id=request.state.trace_id)
     if not launch:
         raise HTTPException(status_code=404, detail="Launch not found")
     return simplify_launch(launch)
-
 @app.get("/rockets")
 def rockets(request: Request):
     rockets_data = fetch_data(f"{BASE_V4}/rockets", trace_id=request.state.trace_id)
     return [simplify_rocket(r) for r in rockets_data]
-
 @app.get("/rockets/{rocket_id}")
 def rocket_details(rocket_id: str, request: Request):
     rocket = fetch_data(f"{BASE_V4}/rockets/{rocket_id}", trace_id=request.state.trace_id)
     if not rocket:
         raise HTTPException(status_code=404, detail="Rocket not found")
     return simplify_rocket(rocket)
-
 @app.get("/info")
 def info(request: Request):
     return {"status": "SpaceX Explorer API is running", "version": "1.0", "trace_id": request.state.trace_id}
-
 @app.get("/metrics")
 def metrics():
     return Response(content=generate_latest(), media_type=CONTENT_TYPE_LATEST)
