@@ -20,9 +20,7 @@ docker ps
 
 **TRACING**
 
-docker logs -f spacex-api
-
-
+kubectl logs -f spacex-api-8f7ff54cd-9gr6v
 
 **DELETE DEPLOYMENTS**
 
@@ -44,11 +42,11 @@ kubectl get all
 
 
 
-kubectl apply -f k8s/prometheus-configmap.yaml
+kubectl apply -f prometheus-configmap.yaml
 
-kubectl apply -f k8s/prometheus-deployment.yaml
+kubectl apply -f prometheus-deployment.yaml
 
-kubectl apply -f k8s/prometheus-service.yaml
+kubectl apply -f prometheus-service.yaml
 
 
 
