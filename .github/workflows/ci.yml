@@ -57,6 +57,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+          # Alternative si token ne fonctionne pas: utilisez DOCKERHUB_PASSWORD
+          # password: ${{ secrets.DOCKERHUB_PASSWORD }}
       
       # 8️⃣ Build Docker image avec tag dynamique
       - name: Build Docker image
