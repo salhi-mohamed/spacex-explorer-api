@@ -11,7 +11,7 @@ def log(msg, level="INFO"):
 # -------------------- CONFIG --------------------
 log("Starting DAST scan")
 
-BASE_URL = "http://127.0.0.1:55557"
+BASE_URL = "http://127.0.0.1:60403"
 log(f"Using target URL: {BASE_URL}")
 
 endpoints = [
